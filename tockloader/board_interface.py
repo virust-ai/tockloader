@@ -197,6 +197,10 @@ class BoardInterface:
             "openocd": {
                 "cfg": "stm32f4discovery.cfg",
             },
+            "jlink": {
+                "device": "STM32F412RG",
+                "address_maximum": 0x11FFFFFF,
+            },
         },
         "nucleof4": {
             "description": "STM32f4-based Nucleo development boards",

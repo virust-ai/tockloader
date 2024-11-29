@@ -46,6 +46,7 @@ class JLinkExe(BoardInterface):
         # Get a list of attached jlink devices, check if that list has at least
         # one entry.
         emulators = self._list_emulators()
+        print("List of Debugger Available {}".format(emulators))
         return self._get_tockloader_board_from_emulators(emulators) != None
 
     def _get_tockloader_board_from_emulators(self, emulators):
@@ -65,6 +66,11 @@ class JLinkExe(BoardInterface):
             # there is only one for now.
             emulator = emulators[0]
             # Check for known JTAG board.
+            if emulator["ProductName"] == "J-Link PRO":
+                # This seems to match both the nRF52dk (PCA10040) and the
+                # nRF52840dk (PCA10056). From a jlink perspective, they are
+                # close enough, which is nice.
+                return "stm32f4discovery"
             if emulator["ProductName"] == "J-Link (unknown)":
                 logging.warning("JLink EmuList reports 'unknown' product.")
                 logging.warning("Please try upgrading JLinkExe to latest version.")

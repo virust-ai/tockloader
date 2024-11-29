@@ -110,7 +110,7 @@ class TockLoader:
             "litex_sim": {"start_address": 0x00080000},
             "veer_el2_sim": {"start_address": 0x20300000},
             "nrf52dk": {
-                "start_address": 0x40000,
+                "start_address": 0x80000,
                 "app_ram_address": 0x20008000,
                 "tickv": {
                     "region_size": 4096,
@@ -125,10 +125,11 @@ class TockLoader:
             "microbit_v2": {"start_address": 0x00040000},
             "qemu_rv32_virt": {"start_address": 0x80100000},
             "stm32f3discovery": {"start_address": 0x08020000},
-            "stm32f4discovery": {
-                "start_address": 0x08040000,
-                "cmd_flags": {"bundle_apps": True},
-            },
+            "stm32f4discovery": {"start_address": 0x08040000},
+            # "stm32f4discovery": {
+            #     "start_address": 0x08040000,
+            #     "cmd_flags": {"bundle_apps": True},
+            # },
             "raspberry_pi_pico": {"start_address": 0x10020000},
             "tickv": {
                 "tickv": {
@@ -1332,7 +1333,6 @@ class TockLoader:
             if ram_start_address != None:
                 for app in apps:
                     app.filter_fixed_ram_address(ram_start_address)
-
             # Get a list of all possible start and length pairs for each app to
             # flash. Also keep around the index of the app in original array.
             slices = []
@@ -1354,7 +1354,6 @@ class TockLoader:
 
                     app_slices.append([starting_address, size, i])
                 slices.append(app_slices)
-
             # See if we can find an ordering that works.
             valid_order = brad_sort(slices)
             if valid_order == None:
